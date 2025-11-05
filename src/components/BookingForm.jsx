@@ -7,17 +7,47 @@ export default function BookingForm({ plantName }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !email) return toast.error("Fill all fields");
-    toast.success(`Consultation booked for ${plantName}!`);
-    setName(""); setEmail("");
+    if (!name || !email) return toast.error("Please fill in all fields");
+    toast.success(`Consultation booked successfully for ${plantName}!`);
+    setName("");
+    setEmail("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg">
-      <h3 className="text-xl font-semibold mb-4">Book Consultation</h3>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-3 mb-3 border rounded" required />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-3 mb-4 border rounded" required />
-      <button type="submit" className="w-full bg-primary text-white py-3 rounded hover:bg-secondary">Book Now</button>
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md mx-auto bg-gradient-to-br from-green-50 to-emerald-100 p-6 sm:p-8 rounded-2xl shadow-md border border-green-200"
+    >
+      <h3 className="text-2xl font-bold text-green-800 mb-5 text-center">
+        Book a Consultation
+      </h3>
+
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full p-3 sm:p-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-gray-500"
+          required
+        />
+
+        <input
+          type="email"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-3 sm:p-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-gray-500"
+          required
+        />
+
+        <button
+          type="submit"
+          className="w-full py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-200"
+        >
+          Book Now
+        </button>
+      </div>
     </form>
   );
 }

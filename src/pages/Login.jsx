@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,8 @@ export default function Login() {
       await login(email, password);
       navigate(from, { replace: true });
     } catch {console.error();
+    } {
+      toast.error("Login failed. Check your credentials.");
     }
   };
 
@@ -29,6 +32,8 @@ export default function Login() {
       await loginWithGoogle();
       navigate(from, { replace: true });
     } catch {console.error();
+    } {
+      toast.error("Google login failed.");
     }
   };
 
@@ -36,46 +41,102 @@ export default function Login() {
     e.preventDefault();
     try {
       await resetPassword(resetEmail);
+      toast.success("Password reset link sent!");
       setShowReset(false);
     } catch {console.error();
+    } {
+      toast.error("Reset failed. Check the email.");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">Login</h2>
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center text-green-800 mb-6">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-3 border rounded-lg" />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+          />
           <div className="relative">
-            <input type={showPass ? "text" : "password"} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full p-3 border rounded-lg pr-10" />
-            <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-3.5">
+            <input
+              type={showPass ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 border rounded-lg pr-10 focus:ring-2 focus:ring-green-400 outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass(!showPass)}
+              className="absolute right-3 top-3.5 text-gray-600"
+            >
               {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
-          <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg">Login</button>
+          <button
+            type="submit"
+            className="w-full bg-green-700 text-white py-3 rounded-lg hover:bg-green-600 transition"
+          >
+            Login
+          </button>
         </form>
 
-        <button onClick={() => setShowReset(true)} className="text-sm text-primary block mx-auto mt-2">Forgot Password?</button>
-
-        <button onClick={handleGoogle} className="w-full mt-4 border py-3 rounded-lg flex justify-center items-center gap-2">
-          <img src="https://www.google.com/favicon.ico" alt="" className="w-5" /> Google
+        <button
+          onClick={() => setShowReset(true)}
+          className="text-sm text-green-700 block mx-auto mt-3 hover:underline"
+        >
+          Forgot Password?
         </button>
 
-        <p className="text-center mt-4">
-          No account? <Link to="/register" className="text-primary font-bold">Register</Link>
+        <button
+          onClick={handleGoogle}
+          className="w-full mt-4 border py-3 rounded-lg flex justify-center items-center gap-2 hover:bg-green-50 transition"
+        >
+          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5" />
+          Continue with Google
+        </button>
+
+        <p className="text-center mt-4 text-gray-700">
+          No account?{" "}
+          <Link to="/register" className="text-green-700 font-bold hover:underline">
+            Register
+          </Link>
         </p>
       </div>
 
       {showReset && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg">
-            <h3 className="font-bold mb-3">Reset Password</h3>
-            <form onSubmit={handleReset}>
-              <input type="email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} placeholder="Email" className="w-full p-2 border mb-3" required />
-              <div className="flex gap-2">
-                <button type="submit" className="flex-1 bg-primary text-white py-2">Send</button>
-                <button type="button" onClick={() => setShowReset(false)} className="flex-1 border py-2">Cancel</button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white p-6 rounded-2xl w-full max-w-sm shadow-lg">
+            <h3 className="font-bold text-lg text-green-800 mb-4">Reset Password</h3>
+            <form onSubmit={handleReset} className="space-y-3">
+              <input
+                type="email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+              />
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  className="flex-1 bg-green-700 text-white py-2 rounded-lg hover:bg-green-600 transition"
+                >
+                  Send
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowReset(false)}
+                  className="flex-1 border py-2 rounded-lg hover:bg-gray-100 transition"
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
