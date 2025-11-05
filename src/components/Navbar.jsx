@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { PiPlantFill } from "react-icons/pi";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -23,7 +24,9 @@ export default function Navbar() {
           to="/"
           className="text-2xl font-extrabold tracking-wide hover:text-green-200 transition-all duration-200"
         >
-          🍃 GreenNest
+        <div className="flex items-center gap-4"> 
+           <PiPlantFill></PiPlantFill> GREEN-NEST
+        </div>
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
