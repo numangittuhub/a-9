@@ -2,29 +2,29 @@ import { useState } from "react";
 import HeroSlider from "../components/HeroSlider";
 import PlantCard from "../components/PlantCard";
 import ExpertCard from "../components/ExpertCard";
-import Footer from "../components/Footer";
+
 import plantsData from "../data/plants.json";
 
 export default function Home() {
   const [plants] = useState(plantsData);
   const topRated = plants.filter((p) => p.rating >= 4.7).slice(0, 3);
-  const experts = [
-    {
-      name: "Dr. Sarah Green",
-      specialty: "Tropical Plants",
-      image: "https://i.postimg.cc/0jG8vJ0Z/expert1.jpg",
-    },
-    {
-      name: "Mike Leaf",
-      specialty: "Air Purifiers",
-      image: "https://i.postimg.cc/5y7rVJ7K/expert2.jpg",
-    },
-    {
-      name: "Luna Bloom",
-      specialty: "Beginner Care",
-      image: "https://i.postimg.cc/3xYkJ7nJ/expert3.jpg",
-    },
-  ];
+  // const experts = [
+  //   {
+  //     name: "Dr. Sarah Green",
+  //     specialty: "Tropical Plants",
+  //     image: "https://i.postimg.cc/0jG8vJ0Z/expert1.jpg",
+  //   },
+  //   {
+  //     name: "Mike Leaf",
+  //     specialty: "Air Purifiers",
+  //     image: "https://i.postimg.cc/5y7rVJ7K/expert2.jpg",
+  //   },
+  //   {
+  //     name: "Luna Bloom",
+  //     specialty: "Beginner Care",
+  //     image: "https://i.postimg.cc/3xYkJ7nJ/expert3.jpg",
+  //   },
+  // ];
 
   return (
     <>
@@ -84,14 +84,7 @@ export default function Home() {
 
         {/* Experts */}
         <section>
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-10">
-            Meet Our Experts
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-            {experts.map((e, i) => (
-              <ExpertCard key={i} {...e} />
-            ))}
-          </div>
+          <ExpertCard></ExpertCard>
         </section>
       </div>
       
